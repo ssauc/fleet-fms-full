@@ -1,0 +1,153 @@
+{
+  "info": {
+    "name": "Fleet FMS API",
+    "_postman_id": "e1111111-2222-3333-4444-555555555555",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base}}/auth/signup",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "auth",
+            "signup"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"admin@example.com\", \"password\": \"changeme\", \"role\": \"admin\"}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base}}/auth/login",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"admin@example.com\", \"password\": \"changeme\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "let j = pm.response.json(); pm.collectionVariables.set('token', j.access_token||'');"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List Vehicles",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base}}/vehicles",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "vehicles"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Vehicle",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base}}/vehicles",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "vehicles"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"unit_no\": \"TRK-101\"}"
+        }
+      }
+    },
+    {
+      "name": "Work Orders",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base}}/work-orders",
+          "host": [
+            "{{base}}"
+          ],
+          "path": [
+            "work-orders"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
